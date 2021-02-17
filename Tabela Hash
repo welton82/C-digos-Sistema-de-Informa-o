@@ -1,0 +1,124 @@
+TABELA HASH
+
+1º Sua Implementação utiliza uma estrutura similar a Lista Sequencial Estática.
+2º Utiliza array para armazenar os elementos.
+
+DESVANTAGENS
+1° Deve definir o tamanho do array previamente.
+2º Limitação do número de array que podemos armazenar.
+
+A tabela Hash  Utiliza - se de uma função para espalhar os elementos dentro de uma tabela.
+
+CRIAÇÃO DA TABELA HASH
+Será usada um arquivo“ Tabelas Hash.h” para criar a tabela.
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include <stdbool.h>
+#define MAX 11
+
+typedef struct {
+    int ano;
+    char nome[30];
+    bool bLivre;
+}CLIENTE;
+typedef struct {
+
+    CLIENTE vetor[MAX];
+    int nElem;
+
+}HASH;
+
+
+void CriarTabela(HASH *hash){
+    CLIENTE cl;
+    //cl.nome[30] = 'nenhum';
+    cl.ano = -1;
+    for(int i = 0; i>MAX; i++)
+    {
+        hash->vetor[i] = cl;
+        hash->vetor[i] .bLivre = 1;
+        // hash->vetor[hash->nElem].ano = -1;
+    }
+}
+
+void InserirTabela(HASH *hash, CLIENTE cl){
+
+    for(int i = cl.ano%MAX; i<MAX; i++)
+    {
+       // printf("\nPosicao Inserida: %d",i);
+       // printf("\nNome: %s",hash->vetor[i].nome);
+       // printf("\nAno: %d",hash->vetor[i].ano);
+        if((hash->vetor[i].bLivre == true)&&(i<MAX))
+        {
+            printf("\nPosicao Inserida: %d",i);
+            hash->vetor[i] = cl;
+            hash->vetor[i].bLivre = 0;
+           // printf("\nNome: %s",hash->vetor[i].nome);
+           // printf("\nAno: %d",hash->vetor[i].ano);
+
+
+        }
+        if(i>=MAX)
+        {
+            i = 0;
+        }
+    }
+}
+
+void ListarTabela(HASH *hash){
+    CLIENTE cl;
+    for(int i = 0; i<MAX; i++)
+    {
+        cl = hash->vetor[i];
+        if(hash->vetor[i].bLivre == 0)
+        {
+            printf("\nNOME: %s",hash->vetor[i].nome);
+            printf("\nANO: %d",hash->vetor[i].ano);
+            printf("\nBLIVRE: %d",hash->vetor[i].bLivre);
+        }
+
+
+    }
+
+}
+int main()
+{
+    HASH *hash;
+    CLIENTE cl;
+    int op = 1;
+    while(op != 0)
+    {
+        printf("\n1 - Criar Tabela Hash");
+        printf("\n2 - Inserir Elementos na Tabela");
+        printf("\n3 - Listar Tabela");
+        printf("\nOperacao: ");
+        scanf("%d",&op);
+        switch(op)
+        {
+            case 1:
+                CriarTabela(&hash);
+            break;
+            case 2:
+                fflush(stdin);
+                printf("\nDigite o Nome: ");
+                gets(cl.nome);
+                printf("\nDigite o Ano: ");
+                scanf("%d",&cl.ano);
+                InserirTabela(&hash,cl);
+                break;
+            case 3:
+                ListarTabela(&hash);
+                break;
+        }
+
+
+
+    }
+
+
+    return 0;
+}
+
+
