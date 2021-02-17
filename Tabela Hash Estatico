@@ -1,0 +1,104 @@
+#include <stdio.h>
+
+#define MAX 11
+
+typedef struct{
+    int cpf;
+    char nome[35];
+}CLIENTE;
+
+typedef struct{
+    CLIENTE vetor[MAX];
+}HASH;
+
+void CriarTabela(HASH *hash){
+
+    for(int i = 0;i<MAX; i++)
+    {
+        CLIENTE cl;
+        cl.cpf = -1;
+        hash->vetor[i]= cl;
+    }
+}
+
+void InserirTabela(HASH *hash, CLIENTE cl){
+    int i = cl.cpf%MAX;
+    if(i >= MAX)
+    {
+        i = 0;
+    }
+    while(hash->vetor[i].cpf != -1)
+    {
+        if(i>=MAX)
+        {
+            i = 0;
+        }
+        i++;
+    }
+    printf("\nInserido na Posicao: %d",i);
+
+    hash->vetor[i] = cl;
+    hash->vetor[i].cpf = cl.cpf;
+}
+void Listar(HASH *hash){
+    int i = 0;
+    while(i < MAX)
+    {
+        if(hash->vetor[i].cpf != -1)
+        {
+            printf("\nNome Informado: %s",hash->vetor[i].nome);
+            printf("\nCPF: %d",hash->vetor[i].cpf);
+        }
+/*
+        else if(hash->vetor[i].cpf == -1)
+        {
+            printf("\n==========");
+            printf("\nPosicao: %d", i);
+            printf("\nNome Informado: %s",hash->vetor[i].nome);
+            printf("\nCPF: %d",hash->vetor[i].cpf);
+            printf("\n==========");
+        }
+        */
+        i++;
+    }
+}
+
+
+int main()
+{
+
+    HASH *hash;
+    CLIENTE cl;
+    int op=1;
+    while(op!=0)
+    {
+        printf("\n1 - Criar");
+        printf("\n2 - Inserir");
+        printf("\n3 - Listar Hash");
+        printf("\nOperacao: ");
+        scanf("%d",&op);
+        switch(op)
+        {
+        case 1:
+            CriarTabela(&hash);
+            break;
+        case 2:
+            printf("\nNome: ");
+            fflush(stdin);
+            gets(cl.nome);
+            printf("Cpf: ");
+            scanf("%d",&cl.cpf);
+            InserirTabela(&hash,cl);
+            break;
+        case 3:
+            Listar(&hash);
+            break;
+        }
+
+
+
+    }
+
+}
+
+
